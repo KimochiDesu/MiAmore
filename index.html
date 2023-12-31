@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Ashley mi amor <3</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .message {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 70%;
+            margin-bottom: 20px;
+        }
+
+        #gifImage {
+            max-width: 150%;
+            max-height: 150%;
+        }
+
+        #yesButton,
+        #noButton {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #1f618d;
+            border: 2px solid #000;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #yesButton:hover,
+        #noButton:hover {
+            background-color: #154360;
+        }
+
+        #yesButton:active,
+        #noButton:active {
+            transform: scale(0.95);
+        }
+
+        #loveButton,
+        #noCounter,
+        #loveCounter {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            color: #fff;
+            border: 2px solid #000;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+
+        #loveButton:hover,
+        #noCounter:hover,
+        #loveCounter:hover {
+            transform: scale(0.95);
+        }
+
+        #loveButton {
+            background-color: #e91e63; /* Pink background color for I love you too button */
+        }
+
+        #noCounter,
+        #loveCounter {
+            background-color: #fff; /* White background color for counters */
+            color: #000; /* Black text color for counters */
+        }
+
+        #counter {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        #noCounter {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #e91e63; /* Pink text color for No Counter */
+        }
+
+        #loveCounter {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #e91e63; /* Pink text color for Love Counter */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .slide-animation {
+            transform: translate(0, 0);
+        }
+
+        .slow-slide-animation {
+            transition: transform 1s ease; /* Slower transition for the "No" button */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div class="message">Do you love me?</div>
+        <img id="gifImage" src="gif1.gif" alt="Animated GIF">
+    
+        <div class="button-container">
+            <button id="yesButton" onclick="yesClicked()">Yes</button>
+            <button id="noButton" onclick="teleportNo()">No</button>
+            <button id="loveButton" class="hidden" onclick="loveClicked()">I love you too 😘</button>
+            <button id="noCounter" class="hidden" onclick="revealNoCounter()">😡 No Counter: <span id="noCount">0</span></button>
+            <button id="loveCounter" class="hidden">😘 Love Counter: <span id="loveCount">0</span></button>
+        </div>
+
+        <div id="counter" class="hidden"></div>
+    </div>
+
+    <script>
+        var currentGifIndex = 1;
+        var loveCounter = 0;
+        var noCounter = 0;
+
+        function getRandomPosition() {
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+
+            var buttonWidth = 120;
+            var buttonHeight = 40;
+
+            var maxX = screenWidth - buttonWidth;
+            var maxY = screenHeight - buttonHeight;
+
+            var randomX = Math.floor(Math.random() * maxX);
+            var randomY = Math.floor(Math.random() * maxY);
+
+            return { x: randomX, y: randomY };
+        }
+
+        function teleportNo() {
+            var noButton = document.getElementById('noButton');
+            var newPosition = getRandomPosition();
+
+            var deltaX = newPosition.x - noButton.offsetLeft;
+            var deltaY = newPosition.y - noButton.offsetTop;
+
+            noButton.classList.add('slide-animation', 'slow-slide-animation'); /* Add slow-slide-animation class */
+
+            noButton.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+            setTimeout(function () {
+                noButton.classList.remove('slide-animation', 'slow-slide-animation');
+            }, 1000); /* Adjusted duration to 1000 milliseconds (1 second) */
+
+            noButton.style.left = newPosition.x + 'px';
+            noButton.style.top = newPosition.y + 'px';
+
+            noCounter++;
+            document.getElementById('noCount').innerText = noCounter;
+        }
+
+        function yesClicked() {
+            var gifImage = document.getElementById('gifImage');
+            var message = document.querySelector('.message');
+            var yesButton = document.getElementById('yesButton');
+            var noButton = document.getElementById('noButton');
+            var loveButton = document.getElementById('loveButton');
+            var counterDiv = document.getElementById('counter');
+
+            switch (currentGifIndex) {
+                case 1:
+                    gifImage.src = 'gif2.gif';
+                    message.innerHTML = "Will you let me cuddle you and take care of you?";
+                    break;
+                case 2:
+                    gifImage.src = 'gif3.gif';
+                    gifImage.style.maxWidth = "150%";
+                    gifImage.style.maxHeight = "150%";
+                    message.innerHTML = "Are you sure?";
+                    break;
+                case 3:
+                    gifImage.src = 'gif4.gif';
+                    message.innerHTML = "I love you Bebe🥺";
+                    yesButton.classList.add('hidden');
+                    noButton.classList.add('hidden');
+                    loveButton.classList.remove('hidden');
+                    counterDiv.classList.remove('hidden');
+                    document.getElementById('noCounter').classList.remove('hidden');
+                    document.getElementById('loveCounter').classList.remove('hidden');
+                    break;
+                default:
+                    gifImage.src = 'gif1.gif';
+                    gifImage.style.maxWidth = "100%";
+                    gifImage.style.maxHeight = "100%";
+                    message.innerHTML = "Do you love me?";
+                    yesButton.classList.remove('hidden');
+                    noButton.classList.remove('hidden');
+                    loveButton.classList.add('hidden');
+                    counterDiv.classList.add('hidden');
+                    document.getElementById('noCounter').classList.add('hidden');
+                    document.getElementById('loveCounter').classList.add('hidden');
+                    currentGifIndex = 0;
+                    break;
+            }
+
+            currentGifIndex++;
+        }
+
+        function loveClicked() {
+            loveCounter++;
+            document.getElementById('loveCount').innerText = loveCounter;
+        }
+
+        function revealNoCounter() {
+            var noCounterElement = document.getElementById('noCounter');
+            noCounterElement.innerHTML = `😡 No Counter: <span id="noCount">${noCounter}</span>`;
+            noCounterElement.classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
